@@ -77,6 +77,11 @@ namespace BoletimOnline.Controllers
             return turma;
         }
 
+        public void calcularNotasAlunos()
+        {
+            // Implementação qualquer.
+        }
+
 
     }
 }

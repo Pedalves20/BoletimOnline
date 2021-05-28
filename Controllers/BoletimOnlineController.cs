@@ -82,6 +82,11 @@ namespace BoletimOnline.Controllers
             // Implementação qualquer.
         }
 
+        public void criarBoletimAluno()
+        {
+            // Implementar método de criação de boletim para o aluno.
+        }
+
 
     }
 }

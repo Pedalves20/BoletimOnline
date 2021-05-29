@@ -47,7 +47,7 @@ namespace BoletimOnline.Controllers
 			{
 				this.NotaFinal += prova.Nota;
 			}
-			this.notaFinal = this.NotaFinal / 3;
+			this.notaFinal = this.NotaFinal / 6;
 		}
 
         public int CompareTo(Boletim other)

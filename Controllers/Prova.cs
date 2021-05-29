@@ -15,10 +15,15 @@ namespace BoletimOnline.Controllers
         {
             this.idAluno = idAluno;
             this.classificacao = classificacao;
-            
-            // atualizar nota de acordo com a classificao > nota de acordo com peso 
 
-            this.nota = GetRandomNota(3.0, 10.0);
+            // atualizar nota de acordo com a classificao > nota de acordo com peso 
+            if (classificacao.Equals(EnumProva.PROVA1)) {
+                this.nota = GetRandomNota(3.0, 10.0);
+            } else if(classificacao.Equals(EnumProva.PROVA2)) {
+                this.nota = GetRandomNota(3.0, 10.0)*2;
+            } else if(classificacao.Equals(EnumProva.PROVA3)) {
+                this.nota = GetRandomNota(3.0, 10.0)*3;
+            }
         }
 
         /**

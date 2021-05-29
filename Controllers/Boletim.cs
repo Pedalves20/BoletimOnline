@@ -5,45 +5,60 @@ using System.Threading.Tasks;
 
 namespace BoletimOnline.Controllers
 {
-    public class Boletim
-    {
+	public class Boletim : IComparable<Boletim>
+	{
 		private Aluno aluno;
-		private String resultado;
+		private string resultado;
 		private List<Prova> provas;
 		private double notaFinal;
+		private long idTurma;
+
+		public Boletim(Aluno aluno, List<Prova> provas, long idTurma) {
+			this.aluno = aluno;
+			this.provas = provas;
+			this.idTurma = idTurma;
+			GetMediaFinal();
+			getSituacaoAluno();
+		}
 
         public List<Prova> Provas { get => provas; set => provas = value; }
         public double NotaFinal { get => notaFinal; set => notaFinal = value; }
         public Aluno Aluno { get => aluno; set => aluno = value; }
         public string Resultado { get => resultado; set => resultado = value; }
+        public long IdTurma { get => idTurma; set => idTurma = value; }
 
         /**
 		 * Recupera situação de aprovação do aluno
 		 * @return situacao
 		 */
-        public String getSituacaoAluno()
+        public void getSituacaoAluno()
 		{
-			return this.NotaFinal > 5 ? "APROVADO" : "REPROVADO";
+			this.resultado = this.NotaFinal >= 6 ? "APROVADO" : "RECUPERACAO";
 		}
 
-		public double getMediaFinal()
+		/**
+		 * Get Media Final.
+		 * @return media final
+		 */
+		public void GetMediaFinal()
 		{
 			this.NotaFinal = 0.0;
-			for (Prova prova : this.Provas)
+			foreach (Prova prova in this.Provas)
 			{
-				this.NotaFinal = this.NotaFinal + prova.);
+				this.NotaFinal += prova.Nota;
 			}
-			return this.notaFinal / 3;
+			this.notaFinal = this.NotaFinal / 3;
 		}
 
-		public double getMediaFinal(List<Prova> provas)
+        public int CompareTo(Boletim other)
+        {
+			var index = NotaFinal.CompareTo(other.NotaFinal);
+			return index;
+		}
+
+		public override string ToString()
 		{
-			this.notaFinal = 0.0;
-			for (Prova prova : provas)
-			{
-				this.notaFinal = this.NotaFinal + prova.getNota();
-			}
-			return this.notaFinal / 3;
+			return $"{NotaFinal}";
 		}
 	}
 }

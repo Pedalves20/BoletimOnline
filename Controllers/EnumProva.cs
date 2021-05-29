@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BoletimOnline.Controllers
 {
-    enum EnumProva
+    public enum EnumProva
     {
         PROVA1, PROVA2, PROVA3, PROVAFINAL, PROVAESPECIAL
     }

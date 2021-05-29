@@ -11,82 +11,87 @@ namespace BoletimOnline.Controllers
     [Route("[controller]")]
     public class BoletimOnlineController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
 
         private readonly ILogger<BoletimOnlineController> _logger;
 
-        public BoletimOnlineController(ILogger<BoletimOnlineController> logger)
-        {
-            _logger = logger;
-        }
-
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public List<Boletim> Get()
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            List<Boletim> boletins = new List<Boletim>();
+            Turma turmaManha = GetTurma("Matematica", "Manha", 1L);
+            Turma turmaTarde = GetTurma("Matematica", "Tarde", 2L);
+            Turma turmaNoite = GetTurma("Matematica", "Noite", 3L);
+
+            boletins.AddRange(GetBoletinsAlunos(turmaManha));
+            boletins.AddRange(GetBoletinsAlunos(turmaTarde));
+            boletins.AddRange(GetBoletinsAlunos(turmaNoite));
+
+            List<Boletim> osMelhores = new List<Boletim>();
+            osMelhores = GetMelhoresAlunos(boletins);
+            foreach (Boletim boletim in osMelhores)
             {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+                Console.WriteLine("Aluno: " + boletim.Aluno.Nome + " Media Final: " + boletim.NotaFinal + " Turma: " + boletim.IdTurma);
+            }
+
+            return boletins;
         }
 
-        public void iniciar()
+        public List<Boletim> GetBoletinsAlunos(Turma turma)
         {
-            Pessoa pessoa = new Pessoa();
-            pessoa.Id = 1L;
-            pessoa.Nome = "Pedro Alves Lucena";
-
-            Console.WriteLine("Nome da Pessoa: " + pessoa.Nome);
+            List<Boletim> boletins = new List<Boletim>();
+            foreach (Aluno aluno in turma.Alunos)
+            {
+                Boletim boletim = new Boletim(aluno, getProvasAluno(aluno.Id), turma.Id);                
+                boletins.Add(boletim);
+            }
+            return boletins;
         }
 
-        public void getBoletimAluno()
+        public List<Prova> getProvasAluno(long idAluno)
         {
-            // 1.   Criar uma lista de alunos;
-            // 1.1. Criar um método generico que cria alunos aleatórios para cada turma;
-            // 2. Pegar cada aluno e suas provas;
-            // 3. Criar um boletim pra cada aluno;
-            // 4. Uma lista de boletins de alunos;
+            List<Prova> provasAluno = new List<Prova>();
+            provasAluno.Add(new Prova(idAluno, EnumProva.PROVA1));
+            provasAluno.Add(new Prova(idAluno, EnumProva.PROVA2));
+            provasAluno.Add(new Prova(idAluno, EnumProva.PROVA3));
+            return provasAluno;
+        }
+
+        private Prova GetProvaAluno(long idAluno, EnumProva classificacao)
+        {
+            return new Prova(idAluno, classificacao);
+        }
+
+        public void GetBoletimAluno()
+        {
             // 5. Pegar quem as melhores notas finais e separar os 5 primeiros alunos;
         }
 
-        public Turma criarTurma()
+        private static Turma GetTurma(string disciplina, string periodo, long idTurma)
         {
+            return new Turma(idTurma, GetRandomAlunos(idTurma), disciplina, periodo);            
+        }
 
-            Turma turma = new Turma();
+        private static List<Aluno> GetRandomAlunos(long idTurma)
+        {
             List<Aluno> alunos = new List<Aluno>();
 
             for (int i = 0; i < 20; i++)
             {
                 Aluno aluno = new Aluno();
                 aluno.Id = i;
-                aluno.Nome = "nome_aluno_" + i;
+                aluno.Nome = "nome_aluno_" + i + "_idTurma_" + idTurma;
+                aluno.Matricula = "M000" + i;
                 alunos.Add(aluno);
             }
-
-            turma.Alunos = alunos;
-            turma.Disciplina = "Matematica";
-            turma.Periodo = "Manha";
-            turma.Id = 1L;
-
-            return turma;
+            return alunos;
         }
 
-        public void calcularNotasAlunos()
+        public List<Boletim> GetMelhoresAlunos(List<Boletim> boletins)
         {
-            // Implementação qualquer.
+            boletins.Sort();
+            // pegar os 5 melhores alunos
+            return boletins;
         }
-
-        public void criarBoletimAluno()
-        {
-            // Implementar método de criação de boletim para o aluno.
-        }
-
 
     }
 }

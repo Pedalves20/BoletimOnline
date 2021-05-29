@@ -8,7 +8,7 @@ namespace BoletimOnline.Controllers
     public class Pessoa
     {
         private long id;
-        private String nome;
+        private string nome;
         public long Id { get => id; set => id = value; }
         public string Nome { get => nome; set => nome = value; }
     }

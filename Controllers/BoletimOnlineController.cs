@@ -63,7 +63,7 @@ namespace BoletimOnline.Controllers
 
         public void GetBoletimAluno()
         {
-            // 5. Pegar quem as melhores notas finais e separar os 5 primeiros alunos;
+  
         }
 
         private static Turma GetTurma(string disciplina, string periodo, long idTurma)
@@ -89,7 +89,7 @@ namespace BoletimOnline.Controllers
         public List<Boletim> GetMelhoresAlunos(List<Boletim> boletins)
         {
             boletins.Sort();
-            // pegar os 5 melhores alunos
+            // pegar os 5 melhore alunos
             return boletins;
         }
 

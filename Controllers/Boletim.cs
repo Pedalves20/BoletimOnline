@@ -27,19 +27,11 @@ namespace BoletimOnline.Controllers
         public string Resultado { get => resultado; set => resultado = value; }
         public long IdTurma { get => idTurma; set => idTurma = value; }
 
-        /**
-		 * Recupera situação de aprovação do aluno
-		 * @return situacao
-		 */
         public void getSituacaoAluno()
 		{
 			this.resultado = this.NotaFinal >= 6 ? "APROVADO" : "RECUPERACAO";
 		}
 
-		/**
-		 * Get Media Final.
-		 * @return media final
-		 */
 		public void GetMediaFinal()
 		{
 			this.NotaFinal = 0.0;

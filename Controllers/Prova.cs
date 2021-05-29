@@ -16,7 +16,6 @@ namespace BoletimOnline.Controllers
             this.idAluno = idAluno;
             this.classificacao = classificacao;
 
-            // atualizar nota de acordo com a classificao > nota de acordo com peso 
             if (classificacao.Equals(EnumProva.PROVA1)) {
                 this.nota = GetRandomNota(3.0, 10.0);
             } else if(classificacao.Equals(EnumProva.PROVA2)) {
@@ -26,10 +25,6 @@ namespace BoletimOnline.Controllers
             }
         }
 
-        /**
-         * Get Nota aleatória.
-         * @return valor aleatorio de nota.
-         */
         public double GetRandomNota(double min, double max)
         {
             Random rand = new Random();
